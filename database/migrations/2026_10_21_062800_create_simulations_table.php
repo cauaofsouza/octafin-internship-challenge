@@ -7,6 +7,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('simulations', function (Blueprint $table) {
             $table->id();
+            $table->uuid('public_id')->unique();
             $table->string('idempotency_key', 64)->nullable()->unique();
             $table->string('full_name');
             $table->string('cpf_hash', 64)->index();   // HMAC-SHA256, for lookups and rate limiting
