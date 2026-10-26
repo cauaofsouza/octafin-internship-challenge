@@ -63,6 +63,8 @@ class StoreSimulationRequest extends FormRequest
         return [
             'employer_cnpj.exists' => 'O empregador não possui convênio ativo.',
             'idempotency_key.regex' => 'O cabeçalho Idempotency-Key aceita apenas letras, números, "-" e "_".',
+            'cpf.cpf' => 'CPF inválido. Confira os 11 dígitos.',
+            'employer_cnpj.cnpj' => 'CNPJ inválido. Confira os 14 dígitos.',
         ];
     }
 }
