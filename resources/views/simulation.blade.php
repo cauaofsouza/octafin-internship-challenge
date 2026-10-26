@@ -267,23 +267,19 @@
         return data;
     }
 
-    /** Mostra o resumo da simulação criada. */
     function showResult(simulation) {
-        const failed = simulation.status === 'failed';
-        const { approved, rejected, unavailable } = simulation.summary;
+        try {
+            sessionStorage.setItem(
+                'octafin_simulation',
+                JSON.stringify(simulation)
+            );
 
-        resultBox.classList.toggle('is-failed', failed);
-        document.getElementById('result-title').textContent = failed ? 'Nenhum banco respondeu' : 'Simulação concluída';
-        document.getElementById('result-text').textContent = failed
-            ? 'Não conseguimos consultar os bancos agora. Tente novamente em instantes.'
-            : `Bancos consultados: ${simulation.offers.length}. Aprovadas: ${approved}. Recusadas: ${rejected}. Sem resposta: ${unavailable}.`;
-        document.getElementById('result-id').textContent = simulation.id;
-        document.getElementById('result-json').textContent = JSON.stringify(simulation, null, 2);
-        resultBox.hidden = false;
-        resultBox.focus();
-
-        // Uma simulação que falhou por completo deve poder ser repetida com nova chave.
-        if (failed) { idempotencyKey = newKey(); }
+            window.location.href = '/offers';
+        } catch (error) {
+            showFormError(
+                'Não foi possível abrir os resultados. Tente novamente.'
+            );
+        }
     }
 
     form.addEventListener('submit', async (event) => {
